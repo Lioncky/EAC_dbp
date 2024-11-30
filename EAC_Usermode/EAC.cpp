@@ -21,7 +21,7 @@ bool WINAPI DeviceIoControl_Hook (HANDLE hDevice, DWORD dwIoControlCode, LPVOID 
 	DWORD_PTR dwStartAddress = 0;
 	HMODULE hModule = 0;
 	static HANDLE hThread = nullptr;
-	if (NT_SUCCESS(NtQueryInformationThread(GetCurrentThread(), static_cast<THREADINFOCLASS>(9), &dwStartAddress, sizeof(DWORD_PTR), NULL)) &&
+	if (NT_SUCCESS(NtQueryInformationThread(GetCurrentThread(), static_cast<THREADINFOCLASS>(9)/*ThreadQuerySetWin32StartAddress*/, &dwStartAddress, sizeof(DWORD_PTR), NULL)) &&
 		!GetModuleHandleExA(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS, reinterpret_cast<char*>(dwStartAddress), &hModule))
 	{
 		if (!EnumWindows([](HWND hWnd, LPARAM lParam) -> BOOL
